@@ -99,11 +99,18 @@ public class AddProductController {
         } else {
             Part part = partService.findById(theID);
             if (part != null && part.getInv() > 0) {
-                product1.getParts().add(part);
-                part.setInv(part.getInv() - 1);
-                product1.setInv(product1.getInv() + 1);
-                partService.save(part);
-                productService.save(product1);
+                // Check if adding this part would exceed its maximum inventory
+                if (part.getInv() + 1 > part.getMaxInv()) {
+                    theModel.addAttribute("error", "Adding this part would exceed its maximum inventory.");
+                } else if (part.getInv() - 1 < part.getMinInv()) {
+                    theModel.addAttribute("error", "Adding this part would lower its inventory below the minimum.");
+                } else {
+                    product1.getParts().add(part);
+                    part.setInv(part.getInv() - 1);
+                    product1.setInv(product1.getInv() + 1);
+                    partService.save(part);
+                    productService.save(product1);
+                }
             }
 
             theModel.addAttribute("product", product1);
@@ -114,9 +121,12 @@ public class AddProductController {
                 if (!product1.getParts().contains(p)) availParts.add(p);
             }
             theModel.addAttribute("availparts", availParts);
+
             return "productForm";
         }
     }
+
+
 
     @GetMapping("/removepart")
     public String removePart(@RequestParam("partID") int theID, Model theModel) {
