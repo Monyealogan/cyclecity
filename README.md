@@ -30,7 +30,7 @@ G.  Modify the parts to track maximum and minimum inventory by doing the followi
 •  Add to the InhousePartForm and OutsourcedPartForm forms additional text inputs for the inventory so the user can set the maximum and minimum values.
 •  Rename the file the persistent storage is saved to.
 •  Modify the code to enforce that the inventory is between or at the minimum and maximum value.
-G: Part.java line 82-96 added to track the max and min inventory as well as updated the BootstrapData to add min and max values to parts line 38-42. Line 25-29 in outsourcedpartform.html added mix and max inventory and line 22-26 in inhousepartform.html added min and max inventory section. Renamed spring-boot-h2-db102 to spring-boot-h2-db102-monyea
+G: Part.java line 82-96 added to track the max and min inventory as well as updated the BootstrapData to add min and max values to parts line 38-42. Line 25-29 in outsourcedpartform.html added mix and max inventory and line 22-26 in inhousepartform.html added min and max inventory section. Renamed spring-boot-h2-db102 to spring-boot-h2-dblogan_219
 Went back and added min and max fields to the productform and a error display. 
 
 
