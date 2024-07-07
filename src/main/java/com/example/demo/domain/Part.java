@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.validators.ValidDeletePart;
+import com.example.demo.validators.ValidEnufParts;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -103,9 +104,6 @@ public abstract class Part implements Serializable {
         this.maxInv = maxInv;
     }
 
-    public boolean isInvValid() {
-        return inv >= minInv && inv <= maxInv;
-    }
 
     public Set<Product> getProducts() {
         return products;
