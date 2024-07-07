@@ -45,11 +45,6 @@ public abstract class Part implements Serializable {
     public Part() {
     }
 
-    public Part(String name, double price, int inv) {
-        this.name = name;
-        this.price = price;
-        this.inv = inv;
-    }
 
     public Part(String name, double price, int inv, int minInv, int maxInv) {
         this.name = name;
