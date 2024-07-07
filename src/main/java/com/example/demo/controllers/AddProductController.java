@@ -3,9 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.service.PartService;
-import com.example.demo.service.PartServiceImpl;
 import com.example.demo.service.ProductService;
-import com.example.demo.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -17,34 +15,32 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- *
- *
- *
- */
 @Controller
 public class AddProductController {
+
     @Autowired
     private ApplicationContext context;
+
+    @Autowired
     private PartService partService;
-    private List<Part> theParts;
+
+    @Autowired
+    private ProductService productService;
+
     private static Product product1;
-    private Product product;
 
     @GetMapping("/showFormAddProduct")
     public String showFormAddPart(Model theModel) {
         theModel.addAttribute("parts", partService.findAll());
-        product = new Product();
-        product1=product;
-        theModel.addAttribute("product", product);
+        product1 = new Product();
+        theModel.addAttribute("product", product1);
 
-        List<Part>availParts=new ArrayList<>();
-        for(Part p: partService.findAll()){
-            if(!product.getParts().contains(p))availParts.add(p);
+        List<Part> availParts = new ArrayList<>();
+        for (Part p : partService.findAll()) {
+            if (!product1.getParts().contains(p)) availParts.add(p);
         }
-        theModel.addAttribute("availparts",availParts);
-        theModel.addAttribute("assparts",product.getParts());
+        theModel.addAttribute("availparts", availParts);
+        theModel.addAttribute("assparts", product1.getParts());
         return "productForm";
     }
 
@@ -53,127 +49,108 @@ public class AddProductController {
         theModel.addAttribute("product", product);
 
         if (bindingResult.hasErrors()) {
-            return "productForm";
-        }
-
-        for (Part part : product.getParts()) {
-            if (part.getInv() - product.getInv() < part.getMinInv()) {
-                bindingResult.rejectValue("inv", "error.product",
-                        "Adding/updating this product would cause part " + part.getName() + " to fall below its minimum inventory.");
-                return "productForm";
+            List<Part> availParts = new ArrayList<>();
+            for (Part p : partService.findAll()) {
+                if (!product.getParts().contains(p)) availParts.add(p);
             }
-        }
-
-        ProductService repo = context.getBean(ProductServiceImpl.class);
-        if (product.getId() != 0) {
-            Product existingProduct = repo.findById((int) product.getId());
-            adjustPartInventories(product, existingProduct);
+            theModel.addAttribute("availparts", availParts);
+            theModel.addAttribute("assparts", product.getParts());
+            return "productForm";
         } else {
-            product.setInv(0);
-        }
-
-        repo.save(product);
-        return "confirmationaddproduct";
-    }
-
-    private void adjustPartInventories(Product newProduct, Product existingProduct) {
-        int quantityToAdd = newProduct.getInv() - existingProduct.getInv();
-
-
-        for (Part part : existingProduct.getParts()) {
-            int newInventory = part.getInv() - quantityToAdd;
-            part.setInv(newInventory);
-            partService.save(part);
-        }
-
-
-        for (Part part : newProduct.getParts()) {
-            int newInventory = part.getInv() + quantityToAdd;
-            part.setInv(newInventory);
-            partService.save(part);
+            updateProductInventory(product);
+            productService.save(product);
+            return "confirmationaddproduct";
         }
     }
-
-
 
     @GetMapping("/showProductFormForUpdate")
     public String showProductFormForUpdate(@RequestParam("productID") int theId, Model theModel) {
-        theModel.addAttribute("parts", partService.findAll());
-        ProductService repo = context.getBean(ProductServiceImpl.class);
-        Product theProduct = repo.findById(theId);
-        product1=theProduct;
-        //    this.product=product;
-        //set the employ as a model attibute to prepopulate the form
+        Product theProduct = productService.findById(theId);
+        product1 = theProduct;
         theModel.addAttribute("product", theProduct);
-        theModel.addAttribute("assparts",theProduct.getParts());
-        List<Part>availParts=new ArrayList<>();
-        for(Part p: partService.findAll()){
-            if(!theProduct.getParts().contains(p))availParts.add(p);
+        theModel.addAttribute("assparts", theProduct.getParts());
+
+        List<Part> availParts = new ArrayList<>();
+        for (Part p : partService.findAll()) {
+            if (!theProduct.getParts().contains(p)) availParts.add(p);
         }
-        theModel.addAttribute("availparts",availParts);
-        //send over to our form
+        theModel.addAttribute("availparts", availParts);
         return "productForm";
     }
 
     @GetMapping("/deleteproduct")
     public String deleteProduct(@RequestParam("productID") int theId, Model theModel) {
-        ProductService productService = context.getBean(ProductServiceImpl.class);
-        Product product2=productService.findById(theId);
-        for(Part part:product2.getParts()){
+        Product product2 = productService.findById(theId);
+        for (Part part : product2.getParts()) {
             part.getProducts().remove(product2);
             partService.save(part);
         }
-        product2.getParts().removeAll(product2.getParts());
+        product2.getParts().clear();
         productService.save(product2);
         productService.deleteById(theId);
 
         return "confirmationdeleteproduct";
     }
 
-    public AddProductController(PartService partService) {
-        this.partService = partService;
-    }
-// make the add and remove buttons work
-
     @GetMapping("/associatepart")
-    public String associatePart(@Valid @RequestParam("partID") int theID, Model theModel){
-        //    theModel.addAttribute("product", product);
-        //    Product product1=new Product();
-        if (product1.getName()==null) {
+    public String associatePart(@RequestParam("partID") int theID, Model theModel) {
+        if (product1.getName() == null) {
             return "saveproductscreen";
-        }
-        else{
-            product1.getParts().add(partService.findById(theID));
-            partService.findById(theID).getProducts().add(product1);
-            ProductService productService = context.getBean(ProductServiceImpl.class);
-            productService.save(product1);
-            partService.save(partService.findById(theID));
-            theModel.addAttribute("product", product1);
-            theModel.addAttribute("assparts",product1.getParts());
-            List<Part>availParts=new ArrayList<>();
-            for(Part p: partService.findAll()){
-                if(!product1.getParts().contains(p))availParts.add(p);
+        } else {
+            Part part = partService.findById(theID);
+            if (part != null && part.getInv() > 0) {
+                product1.getParts().add(part);
+                part.setInv(part.getInv() - 1);
+                product1.setInv(product1.getInv() + 1);
+                partService.save(part);
+                productService.save(product1);
             }
-            theModel.addAttribute("availparts",availParts);
-            return "productForm";}
-        //        return "confirmationassocpart";
-    }
-    @GetMapping("/removepart")
-    public String removePart(@RequestParam("partID") int theID, Model theModel){
-        theModel.addAttribute("product", product);
-        //  Product product1=new Product();
-        product1.getParts().remove(partService.findById(theID));
-        partService.findById(theID).getProducts().remove(product1);
-        ProductService productService = context.getBean(ProductServiceImpl.class);
-        productService.save(product1);
-        partService.save(partService.findById(theID));
-        theModel.addAttribute("product", product1);
-        theModel.addAttribute("assparts",product1.getParts());
-        List<Part>availParts=new ArrayList<>();
-        for(Part p: partService.findAll()){
-            if(!product1.getParts().contains(p))availParts.add(p);
+
+            theModel.addAttribute("product", product1);
+            theModel.addAttribute("assparts", product1.getParts());
+
+            List<Part> availParts = new ArrayList<>();
+            for (Part p : partService.findAll()) {
+                if (!product1.getParts().contains(p)) availParts.add(p);
+            }
+            theModel.addAttribute("availparts", availParts);
+            return "productForm";
         }
-        theModel.addAttribute("availparts",availParts);
+    }
+
+    @GetMapping("/removepart")
+    public String removePart(@RequestParam("partID") int theID, Model theModel) {
+        Part part = partService.findById(theID);
+        if (part != null) {
+            product1.getParts().remove(part);
+            part.setInv(part.getInv() + 1);
+            product1.setInv(product1.getInv() - 1);
+            partService.save(part);
+            productService.save(product1);
+        }
+
+        theModel.addAttribute("product", product1);
+        theModel.addAttribute("assparts", product1.getParts());
+
+        List<Part> availParts = new ArrayList<>();
+        for (Part p : partService.findAll()) {
+            if (!product1.getParts().contains(p)) availParts.add(p);
+        }
+        theModel.addAttribute("availparts", availParts);
         return "productForm";
+    }
+
+    private void updateProductInventory(Product product) {
+        if (product.getId() != 0) {
+            Product existingProduct = productService.findById((int) product.getId());
+            if (existingProduct != null) {
+                for (Part part : existingProduct.getParts()) {
+                    part.setInv(part.getInv() - (product.getInv() - existingProduct.getInv()));
+                    partService.save(part);
+                }
+            }
+        } else {
+            product.setInv(0);
+        }
     }
 }

@@ -104,6 +104,11 @@ public abstract class Part implements Serializable {
         this.maxInv = maxInv;
     }
 
+    public boolean isInvValid() {
+        return inv >= minInv && inv <= maxInv;
+    }
+
+
 
     public Set<Product> getProducts() {
         return products;
