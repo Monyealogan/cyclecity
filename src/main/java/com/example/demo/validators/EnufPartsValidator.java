@@ -10,16 +10,12 @@ import org.springframework.context.ApplicationContext;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-/**
- *
- *
- *
- *
- */
 public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, Product> {
+
     @Autowired
     private ApplicationContext context;
-    public static  ApplicationContext myContext;
+    public static ApplicationContext myContext;
+
     @Override
     public void initialize(ValidEnufParts constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
@@ -27,18 +23,24 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
 
     @Override
     public boolean isValid(Product product, ConstraintValidatorContext constraintValidatorContext) {
-        if(context==null) return true;
-        if(context!=null)myContext=context;
+        if (context == null) return true;
+        if (context != null) myContext = context;
         ProductService repo = myContext.getBean(ProductServiceImpl.class);
         if (product.getId() != 0) {
             Product myProduct = repo.findById((int) product.getId());
-            for (Part p : myProduct.getParts()) {
-                if (p.getInv()<(product.getInv()-myProduct.getInv()))return false;
+            for (Part part : product.getParts()) {
+                if (part.getInv() - 1 < part.getMinInv()) {
+                    constraintValidatorContext.disableDefaultConstraintViolation();
+                    constraintValidatorContext.buildConstraintViolationWithTemplate(
+                            "Adding/updating this product would cause part " + part.getName() + " to fall below its minimum inventory."
+                    ).addPropertyNode("parts").addConstraintViolation();
+                    return false;
+                }
             }
             return true;
+        } else {
+            return true;
         }
-        else{
-                return true;
-            }
     }
 }
+
