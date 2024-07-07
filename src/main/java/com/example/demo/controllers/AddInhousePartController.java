@@ -6,6 +6,7 @@ import com.example.demo.service.InhousePartService;
 import com.example.demo.service.InhousePartServiceImpl;
 import com.example.demo.service.PartService;
 import com.example.demo.service.PartServiceImpl;
+import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -43,12 +44,22 @@ public class AddInhousePartController{
             return "InhousePartForm";
         }
         else{
-        InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
-        InhousePart ip=repo.findById((int)part.getId());
-        if(ip!=null)part.setProducts(ip.getProducts());
+            InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
+            InhousePart ip=repo.findById((int)part.getId());
+            if(ip!=null)part.setProducts(ip.getProducts());
             repo.save(part);
 
-        return "confirmationaddpart";}
+            return "confirmationaddpart";}
+    }
+    @PostMapping("/add")
+    public String addPart(@Valid @ModelAttribute("part") InhousePart part, BindingResult bindingResult) {
+        if (!part.isInvValid()) {
+            bindingResult.rejectValue("stock", "error.part", "Inventory must be between min and max values");
+        }
+        if (bindingResult.hasErrors()) {
+            return "inhousePartForm";
+        }
+        return "redirect:/parts";
     }
 
 }

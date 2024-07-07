@@ -50,6 +50,21 @@ public class AddOutsourcedPartController {
             repo.save(part);
         return "confirmationaddpart";}
     }
+    @PostMapping("/add")
+    public String addPart(@Valid @ModelAttribute("part") OutsourcedPart part, BindingResult bindingResult) {
+        validateInventory(part, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "outsourcedPartForm";
+        }
+        return "redirect:/parts";
+    }
+
+    private void validateInventory(OutsourcedPart part, BindingResult bindingResult) {
+        if (!part.isInvValid()) {
+            bindingResult.rejectValue("stock", "error.part", "Inventory must be between min and max values");
+        }
+    }
 
 
 
