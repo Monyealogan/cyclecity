@@ -1,12 +1,8 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domain.InhousePart;
-import com.example.demo.domain.Part;
 import com.example.demo.service.InhousePartService;
 import com.example.demo.service.InhousePartServiceImpl;
-import com.example.demo.service.PartService;
-import com.example.demo.service.PartServiceImpl;
-import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -15,51 +11,48 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
-/**
- *
- *
- *
- *
- */
 @Controller
-public class AddInhousePartController{
+public class AddInhousePartController {
     @Autowired
     private ApplicationContext context;
 
     @GetMapping("/showFormAddInPart")
-    public String showFormAddInhousePart(Model theModel){
-        InhousePart inhousepart=new InhousePart();
-        theModel.addAttribute("inhousepart",inhousepart);
+    public String showFormAddInhousePart(Model theModel) {
+        InhousePart inhousePart = new InhousePart();
+        theModel.addAttribute("inhousepart", inhousePart);
         return "InhousePartForm";
     }
 
     @PostMapping("/showFormAddInPart")
-    public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult theBindingResult, Model theModel){
-        theModel.addAttribute("inhousepart",part);
-        if(theBindingResult.hasErrors()){
+    public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult bindingResult, Model theModel) {
+        theModel.addAttribute("inhousepart", part);
+        validateInventory(part, bindingResult);
+
+        if (bindingResult.hasErrors()) {
             return "InhousePartForm";
-        }
-        else{
-            InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
-            InhousePart ip=repo.findById((int)part.getId());
-            if(ip!=null)part.setProducts(ip.getProducts());
+        } else {
+            InhousePartService repo = context.getBean(InhousePartServiceImpl.class);
+            InhousePart ip = repo.findById((int) part.getId());
+            if (ip != null) part.setProducts(ip.getProducts());
             repo.save(part);
 
-            return "confirmationaddpart";}
-    }
-    @PostMapping("/add")
-    public String addPart(@Valid @ModelAttribute("part") InhousePart part, BindingResult bindingResult) {
-        if (!part.isInvValid()) {
-            bindingResult.rejectValue("stock", "error.part", "Inventory must be between min and max values");
+            return "confirmationaddpart";
         }
-        if (bindingResult.hasErrors()) {
-            return "inhousePartForm";
-        }
-        return "redirect:/parts";
     }
 
+    private void validateInventory(InhousePart part, BindingResult bindingResult) {
+        if (part.getInv() < part.getMinInv()) {
+            bindingResult.rejectValue("inv", "error.part", "Inventory cannot be less than the minimum value");
+        }
+        if (part.getInv() > part.getMaxInv()) {
+            bindingResult.rejectValue("inv", "error.part", "Inventory cannot be more than the maximum value");
+        }
+        if (part.getMinInv() >= part.getMaxInv()) {
+            bindingResult.rejectValue("minInv", "error.part", "Minimum inventory must be less than maximum inventory");
+            bindingResult.rejectValue("maxInv", "error.part", "Maximum inventory must be greater than minimum inventory");
+        }
+    }
 }
