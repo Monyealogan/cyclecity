@@ -103,12 +103,12 @@ public class AddProductController {
                 if (part.getInv() > part.getMaxInv()) {
                     theModel.addAttribute("error", "Adding this part would exceed its maximum inventory.");
                 }
-                else if (part.getInv() - 1 < part.getMinInv()) {
+                else if (part.getInv() - product1.getInv() < part.getMinInv()) {
                     theModel.addAttribute("error", "Adding this part would lower its inventory below the minimum.");
                 } else {
                     product1.getParts().add(part);
-                    part.setInv(part.getInv() - 1);
-                    product1.setInv(product1.getInv() + 1);
+                    part.setInv(part.getInv() - product1.getInv());
+                    product1.setInv(product1.getInv() + part.getInv());
                     partService.save(part);
                     productService.save(product1);
                 }
