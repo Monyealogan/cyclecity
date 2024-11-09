@@ -87,7 +87,7 @@
 
 
         }
-        .tab-button:hover {
+        .tab-button:hover, .tab-button4:hover {
             color: indigo;
         }
         .tab-button2:hover {
@@ -107,6 +107,17 @@
         }
 
         .tab-button2 {
+            background-color: white;
+            border-color: white;
+            font-size: 15px;
+            cursor: pointer;
+            display: inline-block;
+            color: teal;
+            margin-bottom: 30px;
+            margin-top: 55px;
+        }
+
+        .tab-button4 {
             background-color: white;
             border-color: white;
             font-size: 15px;
@@ -160,6 +171,137 @@
 
         }
 
+        .container-form {
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #ededed;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-family: 'Arial', sans-serif;
+            transition: box-shadow 0.3s ease;
+        }
+
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 1.75em;
+        }
+
+
+        label {
+            display: block;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            margin-top: 10px;
+        }
+
+        input, select, textarea {
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            color: #706f6f;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        textarea {
+            height: 200px;
+        }
+
+        button[type="submit"] {
+            background-color: teal;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #006c6c;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 50%;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container-form {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .header-left img {
+                max-width: 100px;
+            }
+
+            .header-right button {
+                font-size: 0.9em;
+            }
+            h3 {
+                text-align: center;
+                font-weight: bolder;
+                font-size: 30px;
+
+            }
+        }
+
 
 
     </style>
@@ -175,10 +317,65 @@
         <div class="header-right">
             <button onclick="window.location.href='/about'" class="tab-button active">HOME</button>
             <button onclick="window.location.href='/mainscreen'" class="tab-button2 active">PRODUCTS</button>
-            <button onclick="window.location.href='/contact'" class="tab-button3 active">CONTACT</button>
+            <button onclick="window.location.href='/contact'" class="tab-button4 active">CONTACT</button>
+            <button onclick="window.location.href='/reservations'" class="tab-button3 active">RESERVATIONS</button>
         </div>
     </div>
 </div>
+<div class="container-form">
+    <form action="reservation.php" method="post">
+        <h3 class="text-center text-teal">Reservations</h3>
+        <p class="text-center text-muted mb-4">We look forward to meeting you!</p>
+        <div class="elem-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="visitor_name" placeholder="John Doe" pattern="[A-Za-z\s]{3,20}" required>
+        </div>
+        <div class="elem-group">
+            <label for="email">Your E-mail</label>
+            <input type="email" id="email" name="visitor_email" placeholder="john.doe@email.com" required>
+        </div>
+        <div class="elem-group">
+            <label for="phone">Your Phone</label>
+            <input type="tel" id="phone" name="visitor_phone" placeholder="321-348-3872" pattern="(\d{3})-?\s?(\d{3})-?\s?(\d{4})" required>
+        </div>
+        <hr>
+        <div class="elem-group inlined">
+            <label for="adult">Adults</label>
+            <input type="number" id="adult" name="total_adults" placeholder="2" min="1" max="6" required>
+        </div>
+        <div class="elem-group inlined">
+            <label for="child">Children</label>
+            <input type="number" id="child" name="total_children" placeholder="2" min="0" max="4" required>
+        </div>
+        <div class="elem-group">
+            <label for="checkin-date">Reservation Date</label>
+            <input type="date" id="checkin-date" name="checkin" required>
+        </div>
+        <div class="elem-group">
+            <label for="checkin-time">Check-in Time</label>
+            <input type="time" id="checkin-time" name="checkin_time" required>
+        </div>
+        <div class="elem-group">
+            <label for="room-selection">Select Tour</label>
+            <select id="room-selection" name="room_preference" required>
+                <option value="">Choose an experience</option>
+                <option value="downtown">Downtown</option>
+                <option value="countryside">Countryside</option>
+                <option value="park">Park</option>
+            </select>
+        </div>
+        <hr>
+        <button type="submit">Book The Tour</button>
+    </form>
+</div>
+<div id="thankYouModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Thanks for booking!</h2>
+        <p>Your reservation has been confirmed. We look forward to seeing you on the tour!</p>
+    </div>
+</div>
+
 
 
 <footer>
@@ -191,4 +388,53 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-B4gt1jrGC7Jh4AgpsJb2Jth+EEXegxvISylXtmr9ZbPpXrMxT1PXLHr9VVjyxFhE" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9b1TjtRgtW6/zF24lOjK8H3zY7UwZj0jzV8yTf3BjgmPfyPz45dF8EV" crossorigin="anonymous"></script>
 </body>
+<script>
+    var currentDateTime = new Date();
+    var year = currentDateTime.getFullYear();
+    var month = (currentDateTime.getMonth() + 1);
+    var date = (currentDateTime.getDate() + 1);
+
+    if(date < 10) {
+        date = '0' + date;
+    }
+    if(month < 10) {
+        month = '0' + month;
+    }
+
+    var dateTomorrow = year + "-" + month + "-" + date;
+    var checkinElem = document.querySelector("#checkin-date");
+    var checkoutElem = document.querySelector("#checkout-date");
+
+    checkinElem.setAttribute("min", dateTomorrow);
+
+    checkinElem.onchange = function () {
+        checkoutElem.setAttribute("min", this.value);
+    }
+
+    var modal = document.getElementById("thankYouModal");
+    var form = document.querySelector("form");
+
+    var span = document.getElementsByClassName("close")[0];
+
+    form.onsubmit = function(event) {
+        event.preventDefault();
+
+        modal.style.display = "block";
+    };
+
+    span.onclick = function() {
+        modal.style.display = "none";
+        form.reset();
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            form.reset();
+        }
+    }
+
+
+
+</script>
 </html>

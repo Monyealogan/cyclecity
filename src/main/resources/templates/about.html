@@ -117,14 +117,14 @@
             cursor: pointer;
         }
 
-        .tab-button3:hover {
+        .tab-button:hover {
             background-color: white;
             color: indigo;
             border: 1px solid indigo;
 
 
         }
-        .tab-button:hover {
+        .tab-button3:hover, .tab-button4:hover {
             color: indigo;
         }
         .tab-button2:hover {
@@ -132,7 +132,7 @@
         }
 
 
-            .tab-button {
+            .tab-button3 {
                 background-color: white;
                 border-color: white;
                 font-size: 15px;
@@ -153,8 +153,18 @@
                 margin-bottom: 30px;
                 margin-top: 55px;
             }
+        .tab-button4 {
+            background-color: white;
+            border-color: white;
+            font-size: 15px;
+            cursor: pointer;
+            display: inline-block;
+            color: teal;
+            margin-bottom: 30px;
+            margin-top: 55px;
+        }
 
-            .tab-button3 {
+            .tab-button {
                 background-color: teal;
                 border-color: teal;
                 font-size: 15px;
@@ -184,6 +194,10 @@
             border-radius: 30px;
             margin-bottom: 40px;
             justify-content:space-evenly;
+        }
+        .Image-1:hover {
+            transform: scale(1.1);
+            transition: all 20ms ease-in;
         }
  h2 {
      text-align: center;
@@ -237,9 +251,11 @@
             <img src="https://img.freepik.com/premium-vector/continuous-line-drawing-cyclist-riding-bicycle-isolated-white-background-vector_500861-208.jpg" alt="Cycle City Image" class="img-fluid">
         </div>
 
+
         <div class="header-right">
-            <button onclick="window.location.href='/mainscreen'" class="tab-button active">PRODUCTS</button>
-            <button onclick="window.location.href='/contact'" class="tab-button2 active">CONTACT</button>
+            <button onclick="window.location.href='/about'" class="tab-button active">HOME</button>
+            <button onclick="window.location.href='/mainscreen'" class="tab-button2 active">PRODUCTS</button>
+            <button onclick="window.location.href='/contact'" class="tab-button4 active">CONTACT</button>
             <button onclick="window.location.href='/reservations'" class="tab-button3 active">RESERVATIONS</button>
         </div>
     </div>
@@ -250,12 +266,12 @@
 
 
 <div class="img-container">
-    <img src="https://i.pinimg.com/736x/1b/da/0e/1bda0e64b70586f3e1de25c0158cd710.jpg" alt="Image 1">
-    <img src="https://img.freepik.com/premium-photo/row-bikes-are-lined-up-room-with-wall-wood_1130573-200642.jpg" alt="Image 2">
-    <img src="https://cdn.mos.cms.futurecdn.net/kqLSRDQAELv2uFvoVFEi68.jpg" alt="Image 3">
+    <img src="https://i.pinimg.com/736x/1b/da/0e/1bda0e64b70586f3e1de25c0158cd710.jpg" class="Image-1" alt="Image 1">
+    <img src="https://img.freepik.com/premium-photo/row-bikes-are-lined-up-room-with-wall-wood_1130573-200642.jpg" class="Image-1" alt="Image 2">
+    <img src="https://cdn.mos.cms.futurecdn.net/kqLSRDQAELv2uFvoVFEi68.jpg" class="Image-1" alt="Image 3">
 </div>
-<h3>   FAST           <strong> | </strong>    FREEDOM    <strong> | </strong>    FAITH </h3>
-<div class="paragraphs-m-s">  <p class="medium-p"> Cycle City, a trusted name in cycling since the year 1933, bringing expertise to riders across New York, Los Angeles, San Francisco, and Chicago. Originally established in New York City, Cycle City has grown into a multi-generational, family-run business dedicated to delivering reliable, high-quality bikes and repair services. Whether you're a student, a family, or a busy professional, Cycle City has the perfect transportation solutions and expert service to keep you moving. Visit Cycle City today and experience the passion, quality, and personalized care that have made us a top choice for cyclists across the country.</p> <p class="smallest-p">We would be thrilled to welcome you into our family at Cycle City. <strong> Our family values faith, freedom and going fast.</strong> If you share these values, we invite you to inquire about a reservation. Let us show you around our cherished New York City with a grand tour you won’t forget.</p></div>
+<h3>   FAITH           <strong> | </strong>    FREEDOM    <strong> | </strong>    FAST </h3>
+<div class="paragraphs-m-s">  <p class="medium-p"> Cycle City, a trusted name in cycling since the year 1941, bringing expertise to riders across New York, Los Angeles, San Francisco, and Chicago. Originally established in New York City, Cycle City has grown into a multi-generational, family-run business dedicated to delivering reliable, high-quality bikes and repair services. Whether you're a student, a family, or a busy professional, Cycle City has the perfect transportation solutions and expert service to keep you moving. Visit Cycle City today and experience the passion, quality, and personalized care that have made us a top choice for cyclists across the country.</p> <p class="smallest-p">We would be thrilled to welcome you into our family at Cycle City. <strong> Our family values faith, freedom and going fast.</strong> If you share these values, we invite you to inquire about a reservation. Let us show you around our cherished New York City with a grand tour you won’t forget.</p></div>
 <div class="image-container2">
     <img src="https://preview.redd.it/06n3m6btyi851.jpg?width=1080&crop=smart&auto=webp&s=521c1ad5a59e3255772f0298231dbc936ddab795" class="img-new">
     <div class="overlay-text">WHO WE ARE</div>

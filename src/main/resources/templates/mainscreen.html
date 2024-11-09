@@ -14,6 +14,10 @@
     <title>Cycle City</title>
 </head>
 <style>
+    body {
+        font-family: 'Bahnschrift', sans-serif;
+        background-color: white;
+    }
     button {
         font-size: 1.25rem;
         padding: 10px 20px;
@@ -87,17 +91,17 @@
         cursor: pointer;
     }
 
-    .tab-button3:hover {
+    .tab-button2:hover {
         background-color: white;
         color: indigo;
         border: 1px solid indigo;
 
 
     }
-    .tab-button:hover {
+    .tab-button:hover, .tab-button4:hover {
         color: indigo;
     }
-    .tab-button2:hover {
+    .tab-button3:hover {
         color: indigo;
     }
 
@@ -113,7 +117,7 @@
         margin-top: 55px;
     }
 
-    .tab-button2 {
+    .tab-button3 {
         background-color: white;
         border-color: white;
         font-size: 15px;
@@ -123,8 +127,17 @@
         margin-bottom: 30px;
         margin-top: 55px;
     }
-
-    .tab-button3 {
+    .tab-button4 {
+        background-color: white;
+        border-color: white;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-block;
+        color: teal;
+        margin-bottom: 30px;
+        margin-top: 55px;
+    }
+    .tab-button2 {
         background-color: teal;
         border-color: teal;
         font-size: 15px;
@@ -242,9 +255,11 @@
             <img src="https://img.freepik.com/premium-vector/continuous-line-drawing-cyclist-riding-bicycle-isolated-white-background-vector_500861-208.jpg" alt="Cycle City Image" class="img-fluid">
         </div>
 
+
         <div class="header-right">
             <button onclick="window.location.href='/about'" class="tab-button active">HOME</button>
-            <button onclick="window.location.href='/contact'" class="tab-button2 active">CONTACT</button>
+            <button onclick="window.location.href='/mainscreen'" class="tab-button2 active">PRODUCTS</button>
+            <button onclick="window.location.href='/contact'" class="tab-button4 active">CONTACT</button>
             <button onclick="window.location.href='/reservations'" class="tab-button3 active">RESERVATIONS</button>
         </div>
     </div>

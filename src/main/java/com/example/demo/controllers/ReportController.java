@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import ch.qos.logback.core.util.CachingDateFormatter;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.repositories.PartRepository;
@@ -9,11 +10,16 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.data.auditing.CurrentDateTimeProvider;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -38,8 +44,9 @@ public class ReportController {
         PdfWriter.getInstance(document, response.getOutputStream());
         document.open();
 
-        document.add(new Paragraph("Inventory Report"));
-        document.add(new Paragraph("Parts List"));
+
+        document.add(new Paragraph("Inventory Report: " + LocalDateTime.now()));
+        document.add(new Paragraph("Parts:"));
 
         PdfPTable partTable = new PdfPTable(3);
         partTable.addCell("Name");
@@ -55,7 +62,7 @@ public class ReportController {
         }
         document.add(partTable);
 
-        document.add(new Paragraph("Products List"));
+        document.add(new Paragraph("Products:"+ " "));
         PdfPTable productTable = new PdfPTable(3);
         productTable.addCell("Name");
         productTable.addCell("Price");
