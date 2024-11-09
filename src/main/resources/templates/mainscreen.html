@@ -17,7 +17,7 @@
     button {
         font-size: 1.25rem;
         padding: 10px 20px;
-        background-color: darkblue;
+        background-color: teal;
         color: white;
         border: none;
         border-radius: 13px;
@@ -26,29 +26,237 @@
         width: fit-content;
         margin: 0 auto 20px auto;
     }
-    button:hover {
-        background-color: white;
-        color: darkblue;
-        border: 1px solid darkblue;
-    }
+
     h1 {
         text-align: center;
     }
-</style>
-<body>
+    .header-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 6px;
+        margin-bottom: 0;
+    }
 
-<div class="container">
-    <h1>Cycle City</h1><button onclick="window.location.href='/about'">About Us</button>
-    <hr>
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .header-right {
+        display: flex;
+        gap: 10px;
+        margin-left: auto;
+    }
+
+    h1 {
+        font-size: 48px;
+        color: white;
+        font-weight: bolder;
+        text-shadow: -1px -1px 0 teal, 1px -1px 0 teal, -1px 1px 0 black, 1px 1px 0 black;
+        margin-bottom: 80px;
+        margin-top: 50px;
+    }
+
+    .img-fluid {
+        width: 8%;
+        height: auto;
+        margin-bottom: 80px;
+        margin-top: 50px;
+    }
+
+
+
+    p {
+        text-align: left;
+        font-size: 1.10rem;
+        margin: 2px;
+    }
+
+
+    button {
+        font-size: 15px;
+        padding: 10px 20px;
+        background-color: #f1f1f1;
+        color: darkcyan;
+        border-radius: 13px;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
+
+    .tab-button3:hover {
+        background-color: white;
+        color: indigo;
+        border: 1px solid indigo;
+
+
+    }
+    .tab-button:hover {
+        color: indigo;
+    }
+    .tab-button2:hover {
+        color: indigo;
+    }
+
+
+    .tab-button {
+        background-color: white;
+        border-color: white;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-block;
+        color: teal;
+        margin-bottom: 30px;
+        margin-top: 55px;
+    }
+
+    .tab-button2 {
+        background-color: white;
+        border-color: white;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-block;
+        color: teal;
+        margin-bottom: 30px;
+        margin-top: 55px;
+    }
+
+    .tab-button3 {
+        background-color: teal;
+        border-color: teal;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-block;
+        color: white;
+        margin-bottom: 30px;
+        margin-top: 55px;
+    }
+    footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #008080;
+        color: white;
+        margin-top: 50px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+
+    .img-container img {
+        width: 33%;
+        padding: 5px;
+        border-radius: 30px;
+        margin-bottom: 40px;
+        justify-content:space-evenly;
+    }
+
+    h3 {
+        text-align: center;
+        font-weight: lighter;
+        font-size: 34px;
+        margin-bottom: 40px;
+
+    }
+    h2 {
+        text-align: center;
+        font-size: 36px;
+        font-weight: bold;
+        color: teal;
+        margin-bottom: 30px;
+    }
+
+    .btn-primary, button[type="submit"], input[type="button"] {
+        background-color: teal;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        padding: 8px 16px;
+        cursor: pointer;
+        text-align: center;
+        margin-right: 10px;
+    }
+
+    .btn-primary:hover, button[type="submit"]:hover, input[type="button"]:hover {
+        background-color: white;
+        color: teal;
+        border: 1px solid teal;
+    }
+
+    .table {
+        text-align: center;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+    }
+
+    .table th {
+        background-color: teal;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .table td, .table th {
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    thead.thead-dark th {
+        background-color: teal;
+    }
+
+    .container-custom2 {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 20px;
+        border-radius: 15px;
+        background-color: #e6f2f2;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    button, .btn {
+        font-size: 15px;
+        padding: 10px 20px;
+        color: white;
+        background-color: teal;
+        border-radius: 13px;
+        border: none;
+        cursor: pointer;
+    }
+
+
+
+
+
+
+</style>
+</head>
+<body>
+<body>
+<div class="container container-custom">
+    <div class="header-center">
+        <div class="header-left">
+            <h1>CYCLE CITY</h1>
+            <img src="https://img.freepik.com/premium-vector/continuous-line-drawing-cyclist-riding-bicycle-isolated-white-background-vector_500861-208.jpg" alt="Cycle City Image" class="img-fluid">
+        </div>
+
+        <div class="header-right">
+            <button onclick="window.location.href='/about'" class="tab-button active">HOME</button>
+            <button onclick="window.location.href='/contact'" class="tab-button2 active">CONTACT</button>
+            <button onclick="window.location.href='/reservations'" class="tab-button3 active">RESERVATIONS</button>
+        </div>
+    </div>
+</div>
+<div class="container container-custom2">
     <h2>Parts</h2>
     <form th:action="@{/mainscreen}">
-        Filter: <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}" required />
-        &nbsp;
+        <label>Filter:</label>
+        <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}" required />
         <input type="submit" value="Search" />
-        &nbsp;
         <input type="button" value="Clear" id="btnClearPart" onclick="clearSearch()" />
     </form>
-    <br><br>
     <a th:href="@{/showFormAddInPart}" class="btn btn-primary btn-sm mb-3">Add Inhouse Part</a>
     <a th:href="@{/showFormAddOutPart}" class="btn btn-primary btn-sm mb-3">Add Outsourced Part</a>
     <table class="table table-bordered table-striped">
@@ -66,30 +274,23 @@
             <td th:text="${tempPart.price}">$120</td>
             <td th:text="${tempPart.inv}">12</td>
             <td>
-            <td><a th:href="@{/showPartFormForUpdate(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
-                <a th:href="@{/deletepart(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3"
-                   onclick="if(!(confirm('Are you sure you want to delete this part?')))return false">Delete</a>
+                <a th:href="@{/showPartFormForUpdate(partID=${tempPart.id})}" class="btn btn-primary btn-sm">Update</a>
+                <a th:href="@{/deletepart(partID=${tempPart.id})}" class="btn btn-primary btn-sm"
+                   onclick="return confirm('Are you sure you want to delete this part?')">Delete</a>
             </td>
-
-
-
         </tr>
         </tbody>
     </table>
+</div>
+
+<div class="container container-custom2">
     <h2>Products</h2>
     <form th:action="@{/mainscreen}">
-        Filter: <input type="text" name="productkeyword" id="productkeyword" size="50" th:value="${productkeyword}" required />
-        &nbsp;
+        <label>Filter:</label>
+        <input type="text" name="productkeyword" id="productkeyword" size="50" th:value="${productkeyword}" required />
         <input type="submit" value="Search" />
-        &nbsp;
         <input type="button" value="Clear" id="btnClearProduct" onclick="clearSearch()" />
     </form>
-    <script type="text/javascript">
-        function clearSearch() {
-            window.location = "[[@{/}]]";
-        }
-    </script>
-    <br><br>
     <a th:href="@{/showFormAddProduct}" class="btn btn-primary btn-sm mb-3">Add Product</a>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
@@ -106,18 +307,33 @@
             <td th:text="${tempProduct.price}">$300</td>
             <td th:text="${tempProduct.inv}">3</td>
             <td>
-                <a th:href="@{/showProductFormForUpdate(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
-                <a th:href="@{/deleteproduct(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3"
-                   onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
-                <form action="/buyProduct" method="post" style="display:inline;">
-                    <input type="hidden" name="productId" th:value="${tempProduct.id}">
-                    <button type="submit">Buy Now</button>
-                </form>
-
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    <a th:href="@{/showProductFormForUpdate(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
+                    <a th:href="@{/deleteproduct(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3"
+                       onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
+                    <form action="/buyProduct" method="post" style="display: inline;">
+                        <input type="hidden" name="productId" th:value="${tempProduct.id}">
+                        <button type="submit" class="btn btn-primary btn-sm mb-3">Buy Now</button>
+                    </form>
+                </div>
             </td>
+
         </tr>
         </tbody>
     </table>
 </div>
+
 </body>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "/mainscreen";
+    }
+</script>
+<div class="container container-custom2">
+    <button onclick="window.location.href='/generateReport'" class="btn btn-primary mb-3">Generate Report</button>
+</div>
+
+
+
+
 </html>
