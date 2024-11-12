@@ -100,15 +100,20 @@ public class AddProductController {
             Part part = partService.findById(theID);
             if (part != null && part.getInv() > 0) {
                 // Check if adding this part would exceed its maximum inventory
-                if (part.getInv() > part.getMaxInv()) {
+                if (part.getInv() <= 0) {
+                    theModel.addAttribute("error", "This part is out of stock.");
+                } else if (part.getInv() > part.getMaxInv()) {
                     theModel.addAttribute("error", "Adding this part would exceed its maximum inventory.");
-                }
-                else if (part.getInv() - product1.getInv() < part.getMinInv()) {
+                } else if (part.getInv() - 1 < part.getMinInv()) {
                     theModel.addAttribute("error", "Adding this part would lower its inventory below the minimum.");
                 } else {
+                    // Decrease the part's inventory by 1
+                    part.setInv(part.getInv() - 1);
+
+                    // Add the part to the product
                     product1.getParts().add(part);
-                    part.setInv(part.getInv() - product1.getInv());
-                    product1.setInv(product1.getInv() + part.getInv());
+
+                    // Save the updated part and product
                     partService.save(part);
                     productService.save(product1);
                 }
